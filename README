@@ -1,8 +1,8 @@
-Array::PrintCols is a Perl 5 module which defines a subroutine to
-print arrays of elements in alphabetically, vertically sorted columns. 
-Optional arguments can be given to control either the width or number of
-the columns, the total width of the output, and the amount of
-indentation. 
+Array::PrintCols, version 2.0, is a Perl 5 module which defines a
+subroutine to print arrays of elements in alphabetically, vertically
+sorted columns.  Optional arguments can be given to control either the
+width or number of the columns, the total width of the output, and the
+amount of indentation.
 
 The module has embedded POD text with which man or HTML pages can be
 created.
@@ -11,19 +11,13 @@ For detailed usage information, you can do:
 
     pod2man PrintCols.pm | nroff -man 
 
-The module is accompanied with a Makefile, this README, a test program
-(test.pl), a reference test output file, and the GNU License, under
+The module is accompanied with Makefile.PL, this README, some test
+programs, a reference test output file, and the GNU License, under
 which this software is freely available.
 
-The archives are available on:
-
-    ftp://hub.ucsb.edu/pub/prog/perl/Array-PrintCols-$VER.shar
-    ftp://hub.ucsb.edu/pub/prog/perl/Array-PrintCols-$VER.tar.gz
-
-where $VER is the latest version.
+The archives are available at the nearest CPAN site, under the
+directory "modules/Array".
 
 Contributions or improvements are welcome.
-_______________________________________
-Alan K. Stebbens <aks@hub.ucsb.edu>
-College of Engineering
-University of California, Santa Barbara
+___________________________________________________________________
+Alan K. Stebbens <stebbens@sgi.com> http://reality.sgi.com/stebbens

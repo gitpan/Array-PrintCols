@@ -1,4 +1,4 @@
-# Array-PrintCols.pm
+# Array::PrintCols.pm
 #
 #    Copyright (C) 1995  Alan K. Stebbens <aks@hub.ucsb.edu>
 #
@@ -18,7 +18,7 @@
 #
 # Author: Alan K. Stebbens <aks@hub.ucsb.edu>
 #
-# $Id: PrintCols.pm,v 1.2 1995/12/03 03:46:08 aks Exp $
+# $Id: PrintCols.pm,v 2.0 1996/08/10 07:43:01 stebbens Exp $
 
 package Array::PrintCols;
 
@@ -48,17 +48,17 @@ $PreSorted = 1;			# if set, do not need to sort
 
 sub print_cols {
     my($array)       = shift;
-    my($col_width)   = shift;
+    my($col_width)   = shift || 0;
     my($total_width) = shift || $ENV{'COLUMNS'} || 80;
     my($indent)      = shift || 0;
 
     my($key,$max_len,$cols,$fmt,$cols,$col,$rows,$row);
 
     # calculate the maximum item length
-    $max_len = max (map length, @$array);
+    $max_len = max (map length, @$array) + 1;
 
     # Calculate maximum possible # of columns
-    $cols = max 1, int(($total_width - $indent) / ($max_len + 1));
+    $cols = max 1, int(($total_width - $indent) / $max_len);
 
     # Now adjust the $cols based on $col_width
     if ($col_width < 0) {		# given as -$columns?
@@ -78,7 +78,7 @@ sub print_cols {
 
     $array = [sort @$array] unless $PreSorted;	# sort if necessary
     for ($row = 0; $row < $rows; $row++) {
-	print (' ' x $indent) if $indent > 0;
+	print ' ' x $indent if $indent > 0;
 	for ($col = $row; $col <= $#$array; $col += $rows) {
 	    printf $fmt,$array->[$col];
 	}
@@ -106,7 +106,7 @@ __END__
 
 =head1 NAME
 
-print_cols
+print_cols - Print array elements in vertically sorted columns.
 
 =head1 SYNOPSIS
 
