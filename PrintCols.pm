@@ -18,14 +18,14 @@
 #
 # Author: Alan K. Stebbens <aks@hub.ucsb.edu>
 #
-# $Id: PrintCols.pm,v 2.0 1996/08/10 07:43:01 stebbens Exp $
+# $Id: PrintCols.pm,v 1.2 1998/01/18 07:15:57 aks Exp $
 
 package Array::PrintCols;
 
 require 5.001;
 use Exporter; 
 @ISA = (Exporter);
-@EXPORT = qw( print_cols );
+@EXPORT = qw( print_cols format_cols );
 
 sub min;
 sub max;
@@ -37,22 +37,29 @@ $PreSorted = 1;			# if set, do not need to sort
 # $Array::PrintCols::PreSorted = 0;
 #
 
-# print_cols \@array [, $col_width [, $total_width [, $indent ] ] ]
+# format_cols \@array [, $col_width [, $total_width [, $indent ] ] ]
 #
 # or
 #
-# print_cols \@array [, -$columns [, $total_width, [, $indent ] ] ]
+# format_cols \@array [, -$columns [, $total_width, [, $indent ] ] ]
+#
+#
+# This used to be "print_cols", which always sent everything to STDOUT.
+# Now, the work is done in "format_cols", which returns a string result.
+# Thanks to Gisle Aas <aas@bergen.sn.no> for the suggestion)
 
-# Routine to display an array of values in alphabetically vertically 
+# Routine to format an array of values in alphabetically vertically 
 # sorted columns. 
 
-sub print_cols {
+sub format_cols {
     my($array)       = shift;
     my($col_width)   = shift || 0;
     my($total_width) = shift || $ENV{'COLUMNS'} || 80;
     my($indent)      = shift || 0;
 
     my($key,$max_len,$cols,$fmt,$cols,$col,$rows,$row);
+
+    my $o = '';		# start of the output
 
     # calculate the maximum item length
     $max_len = max (map length, @$array) + 1;
@@ -78,13 +85,18 @@ sub print_cols {
 
     $array = [sort @$array] unless $PreSorted;	# sort if necessary
     for ($row = 0; $row < $rows; $row++) {
-	print ' ' x $indent if $indent > 0;
+	$o .= ' ' x $indent if $indent > 0;
 	for ($col = $row; $col <= $#$array; $col += $rows) {
-	    printf $fmt,$array->[$col];
+	    $o .= sprintf $fmt,$array->[$col];
 	}
-	print "\n";
+	$o .= "\n";
     }
+    $o;
 }
+
+# print_cols -- just print the results of format_cols.
+
+sub print_cols { print format_cols(@_); }
 
 sub min { 
     my($min) = shift;
@@ -106,7 +118,7 @@ __END__
 
 =head1 NAME
 
-print_cols - Print array elements in vertically sorted columns.
+print_cols, format_cols - Print or format array elements in vertically sorted columns.
 
 =head1 SYNOPSIS
 
@@ -120,9 +132,13 @@ C<print_cols \@I<array>, $I<colspec>, $I<total_width>;>
 
 C<print_cols \@I<array>, $I<colspec>, $I<total_width>, $I<indent>;>
 
+$I<output> = C<format_cols> <same arguments as C<print_cols>>;
+
 C<$Array::PrintCols::PreSorted = 0;>
 
 =head1 DESCRIPTION
+
+This module exports two subroutine names: C<print_cols> and C<format_cols>.
 
 The C<print_cols> subroutine prints the items of C<@I<array>> in multiple,
 alphabetically sorted vertical columns.  One, two, or three optional arguments
@@ -131,11 +147,11 @@ the total width of the output, and indentation.  Reasonable defaults apply
 in the absence of the optional arguments (or when given as the empty string 
 or zero).  Generally, the minimum width column is used when possible.
 
-If C<$I<col_width>> is given as a non-negative number, it is treated as
+If C<$I<colspec>> is given as a non-negative number, it is treated as
 the minimum width of the column; the actual width will be the maximum of
 this value and the lengths of all array items.
 
-If C<$I<col_width>> is given as a negative number, its absolute value
+If C<$I<colspec>> is given as a negative number, its absolute value
 value is used to determine the total number of columns.  However, it cannot
 exceed the total number of columns possible based on the maximum length
 of all the array elements.
@@ -153,7 +169,10 @@ C<print_cols> subroutine will expect its array argument to already
 be sorted.  If this variable is nil or zero, C<print_cols> will
 cause print out a sorted I<copy> of the input array.
 
-=head1 EXAMPLE
+The routine C<format_cols> is called exactly like C<print_cols> but returns
+the formatted result as a string, rather than printing it.
+
+=head1 EXAMPLES
 
     use Array::PrintCols;
 
@@ -162,9 +181,13 @@ cause print out a sorted I<copy> of the input array.
     # print in three columns with an indention of 1.
     print_cols \@commands, -3, 0, 1;
 
+
+    # print the formatted result data to the result file
+    print RESULTFILE format_cols \@result_data;
+
 =head1 AUTHOR
 
-Copyright (C) 1995  Alan K. Stebbens <aks@hub.ucsb.edu>
+Copyright (C) 1995-1998  Alan K. Stebbens <aks@sgi.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
