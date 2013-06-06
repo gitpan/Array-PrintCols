@@ -1,0 +1,42 @@
+{
+   "abstract" : "Format or print values from an array or hash in one or more sorted, vertical columns.\n",
+   "author" : [
+      "Alan K. Stebbens <aks@stebbens.org>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "open_source"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Array-PrintCols",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.40"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : "0",
+            "File::ShareDir" : "1.00"
+         }
+      }
+   },
+   "provides" : {
+      "Array::PrintCols" : {
+         "file" : "lib/Array/PrintCols.pm",
+         "version" : "2.4"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://opensource.org/licenses/gpl-license.php"
+      ]
+   },
+   "version" : "2.4"
+}

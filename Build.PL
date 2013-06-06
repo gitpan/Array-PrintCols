@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+# Build.PL for Array::PrintCols.pm
 #
 #    Copyright (C) 1996-2013  Alan K. Stebbens <aks@stebbens.org>
 #
@@ -13,3 +15,25 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+use Module::Build;
+my $build = Module::Build->new
+  ( 
+    module_name        => 'Array::PrintCols',
+    license	       => 'gpl',
+    dist_author	       => ['Alan K. Stebbens <aks@stebbens.org>'],
+    dist_version       => '2.4',
+    dist_abstract      => <<ABSTRACT,
+Format or print values from an array or hash in one or more sorted, vertical columns.
+ABSTRACT
+    share_dir	       => [ 'tests' ],
+    create_makefile_pl => 'traditional',
+    PL_Files	       => {},
+    configure_requires => {
+      'Module::Build'  => '>= 0.40'
+    },
+    requires	       => { 
+      'Carp'	       => 0,
+    },
+  );
+  $build->create_build_script;
