@@ -1,24 +1,23 @@
 ---
-abstract: "Format or print values from an array or hash in one or more sorted, vertical columns.\n"
+abstract: unknown
 author:
-  - 'Alan K. Stebbens <aks@stebbens.org>'
-build_requires: {}
+  - unknown
+build_requires:
+  ExtUtils::MakeMaker: 0
 configure_requires:
-  Module::Build: 0.40
+  ExtUtils::MakeMaker: 0
 dynamic_config: 1
-generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.120921'
-license: open_source
+generated_by: 'ExtUtils::MakeMaker version 6.68, CPAN::Meta::Converter version 2.131560'
+license: unknown
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Array-PrintCols
-provides:
-  Array::PrintCols:
-    file: lib/Array/PrintCols.pm
-    version: 2.5
+no_index:
+  directory:
+    - t
+    - inc
 requires:
   Carp: 0
   File::ShareDir: 1.00
-resources:
-  license: http://opensource.org/licenses/gpl-license.php
-version: 2.5
+version: 2.6
